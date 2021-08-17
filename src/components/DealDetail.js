@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {View,Text,Image,StyleSheet, TouchableOpacity,PanResponder,Animated,Dimensions} from 'react-native';
+import {View,Text,Image,StyleSheet, TouchableOpacity,PanResponder,Animated,Dimensions,Button, Linking} from 'react-native';
 import {priceDisplay} from '../util';
 import ajax from '../ajax';
 
@@ -62,6 +62,9 @@ imageXPos = new Animated.Value(0);
             deal:fullDeal,
         });
     }
+    openDealUrl=()=>{
+      Linking.openURL(this.state.deal.url)
+    }
     render(){
         const {deal} = this.state;
         return(
@@ -90,7 +93,7 @@ imageXPos = new Animated.Value(0);
                 <View style={styles.detail}>
                     <Text>{deal.description}</Text>
                 </View>
-               
+               <Button title="Buy this deal!" onPress={this.openDealUrl}/>
             </View>
         );
     }
