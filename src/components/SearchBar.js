@@ -16,17 +16,15 @@ class SearchBar extends React.Component {
 
   handleChange = (searchTerm) => {
     this.setState({ searchTerm }, () => {
-      this.debouncedSearchDeals(this.state.searchTerm);
-    });
+        this.debouncedSearchDeals(this.state.searchTerm);
+      });
   };
   render() {
     return (
-      <TextInput
-        value={this.state.searchTerm}
-        placeholder="Search All Deals"
-        style={styles.input}
-        onChangeText={this.handleChange}
-      />
+      <TextInput 
+      placeholder="Search All Deals"
+      style={styles.input}
+      onChangeText={this.handleChange}/>
     );
   }
 }

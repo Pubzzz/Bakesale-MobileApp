@@ -1,18 +1,34 @@
 import React from 'react';
 
-import {View,Text,StyleSheet} from 'react-native';
+import {View,Text,StyleSheet,Animated,Easing,Dimensions } from 'react-native';
 import ajax from '../ajax';
 import DealDetail from './DealDetail';
 import DealList from './DealList';
 import SearchBar from './SearchBar';
 
 class App extends React.Component {
+  titleXPos = new Animated.Value(0);
   state={
     deals:[],
     dealsFromSearch:[],
     currentDealId:null,
   }
+  animateTitle=(direction=1)=>{
+
+    const width = Dimensions.get('window').width-150;
+    Animated.timing(
+      this.titleXPos,
+      {toValue:direction *(width/2),duration:1000,
+      easing:Easing.ease,
+     }
+    ).start(({finished})=>{
+      if(finished){
+        this.animateTitle(-1*direction);
+      }
+    })
+  }
   async componentDidMount() {
+    this.animateTitle();
     const deals = await ajax.fetchInitialDeals();
     this.setState({deals});
   }
@@ -47,22 +63,20 @@ class App extends React.Component {
       /></View>
       );
     }
-    const dealsToDisplay = this.state.dealsFromSearch.length>0 
-    ? this.state.dealsFromSearch
-    : this.state.deals;
-
-    if(dealsToDisplay.length>0){
+    const dealsToDisplay = this.state.dealsFromSearch.length > 0 ? this.state.dealsFromSearch : this.state.deals;
+  
+    if(dealsToDisplay.length > 0){
       return (
         <View styles={styles.main}>
             <SearchBar searchDeals={this.searchDeals} />
-            <DealList deals={this.state.deals} onItemPress={this.setCurrentDeal}/>
+            <DealList deals={dealsToDisplay} onItemPress={this.setCurrentDeal}/>
         </View>
       ) 
     }
     return(
-      <View style={styles.container}>
+      <Animated.View style={[{left:this.titleXPos},styles.container]}>
           <Text style={styles.header}>Bakesale</Text>
-      </View>
+      </Animated.View>
     );
   }
 }
@@ -77,7 +91,7 @@ const styles = StyleSheet.create({
     fontSize:40,
   },
   main:{
-    marginTop:150,
+    marginTop:50,
   }
 })
 

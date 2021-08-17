@@ -24,7 +24,7 @@ class DealDetail extends React.Component {
         return(
             <View  style={styles.dealstyle}>
                  <TouchableOpacity style={styles.backLink} onPress={this.props.onBack}>
-                        <Text  style={styles.backLinkText}>Go Back</Text>
+                        <Text  style={styles.backLinkText}>Back</Text>
                     </TouchableOpacity>
                 <Image source={{uri: deal.media[0]}}
                 style={styles.image}
@@ -51,10 +51,9 @@ class DealDetail extends React.Component {
     }
 }
 const styles = StyleSheet.create({
-    dealstyle:{
-        marginHorizontal:20,
-        marginTop:50,
-    },
+  dealstyle:{
+    marginTop:50,
+  },
       backLink: {
         marginBottom: 5,
         color: '#22f',
@@ -64,6 +63,7 @@ const styles = StyleSheet.create({
         color:'#22f',
         fontSize:20,
         fontWeight:'bold',
+        marginLeft:10,
       },
       image: {
         width: '100%',
@@ -98,17 +98,6 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         borderRadius: 30,
-      },
-      detail: {
-        borderColor:'#bbb',
-        borderWidth:1,
-          paddingTop:10,
-        borderColor: '#ddd',
-        borderWidth: 1,
-        borderStyle: 'dotted',
-        margin: 10,
-        padding: 10,
-        fontSize:25,
       },
 })
 export default DealDetail;
